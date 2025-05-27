@@ -6,6 +6,7 @@ import { TypeAnimation } from "react-type-animation"
 import { ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
+
 export default function HeroSection() {
   const controls = useAnimation()
   const sectionRef = useRef<HTMLElement>(null)
@@ -26,17 +27,20 @@ export default function HeroSection() {
   }
 
   return (
+    
     <section
       id="hero"
       ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
     >
+      
       {/* Main Content */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={controls}
         className="text-center max-w-4xl mx-auto relative z-10"
       >
+
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -54,13 +58,12 @@ export default function HeroSection() {
           transition={{ delay: 1, duration: 0.8 }}
           className="text-xl md:text-2xl text-gray-300 mb-8 h-16"
         >
+          
           <TypeAnimation
             sequence={[
               "AI Engineer",
               2000,
-              "Generative AI Specialist",
-              2000,
-              "RAG Systems Expert",
+              "Data Scientist",
               2000,
               "LLM Integration Developer",
               2000,
@@ -113,7 +116,7 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 3, duration: 1 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom25 left-1/2 transform -translate-x-1/2"
         >
           <motion.button
             onClick={scrollToNext}
