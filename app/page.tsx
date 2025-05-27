@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { use, useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import HeroSection from "@/components/hero-section"
 import AboutSection from "@/components/about-section"
@@ -12,6 +12,20 @@ import ParticleBackground from "@/components/particle-background"
 import ChatAssistant from "@/components/chat-assistant"
 import Navigation from "@/components/navigation"
 
+
+
+import Spline from '@splinetool/react-spline';
+
+// export default function Portfolio() {
+//   return (
+//     <main>
+      // <Spline
+      //   scene="https://prod.spline.design/5XqEfa93rkm7U6Gk/scene.splinecode" 
+      // />
+//     </main>
+//   );
+// }
+
 export default function Portfolio() {
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -21,11 +35,16 @@ export default function Portfolio() {
 
   const backgroundOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [1, 0.8, 0.6, 0.4])
 
+
   return (
     <div ref={containerRef} className="relative min-h-screen bg-slate-950 text-white overflow-x-hidden">
-      {/* Particle Background */}
-      <motion.div className="fixed inset-0 z-0" style={{ opacity: backgroundOpacity }}>
+      
+
+
+      {/* Particle Background (layered on top of Spline) */}
+      <motion.div className="fixed inset-0 z-1" style={{ opacity: backgroundOpacity }}>
         <ParticleBackground />
+        
       </motion.div>
 
       {/* Navigation */}
@@ -33,6 +52,11 @@ export default function Portfolio() {
 
       {/* Main Content */}
       <main className="relative z-10">
+      
+      <Spline
+        scene="https://prod.spline.design/5XqEfa93rkm7U6Gk/scene.splinecode" 
+        style={{ position: 'absolute' ,height: '9%', width: '100%',zIndex:1}}
+              />
         <HeroSection />
         <AboutSection />
         <ProjectsSection />
