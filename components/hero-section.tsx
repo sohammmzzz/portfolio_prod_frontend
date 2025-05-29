@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect,useState, useRef } from "react"
 import { motion, useAnimation } from "framer-motion"
 import { TypeAnimation } from "react-type-animation"
 import { ChevronDown } from "lucide-react"
@@ -10,7 +10,16 @@ import { Button } from "@/components/ui/button"
 export default function HeroSection() {
   const controls = useAnimation()
   const sectionRef = useRef<HTMLElement>(null)
+  const [isMobile, setIsMobile] = useState(false);
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    const updateIsMobile = () => setIsMobile(mediaQuery.matches);
+    mediaQuery.addEventListener('change', updateIsMobile);
+    updateIsMobile(); // set initial value
+    return () => mediaQuery.removeEventListener('change', updateIsMobile);
+  }, []);
+  
   useEffect(() => {
     controls.start({
       opacity: 1,
@@ -77,15 +86,23 @@ export default function HeroSection() {
           />
         </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
-          className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed"
-        >
-          Bridging the gap between cutting-edge AI technology and real-world applications. Specializing in Generative
-          AI, RAG systems, and enterprise automation with measurable impact on business outcomes.
-        </motion.p>
+        {/* Paragraph with conditional glassmorphism background */}
+        <div className="relative mb-12">
+          {/* Glassmorphism background - only visible on mobile */}
+          {isMobile && (
+            <div className="absolute inset-0 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 shadow-2xl -m-4" />
+          )}
+          
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.5, duration: 0.8 }}
+            className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed relative z-10 px-4 py-4"
+          >
+            Bridging the gap between cutting-edge AI technology and real-world applications. Specializing in Generative
+            AI, RAG systems, and enterprise automation with measurable impact on business outcomes.
+          </motion.p>
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -116,7 +133,7 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 3, duration: 1 }}
-          className="absolute bottom25 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-25 left-1/2 transform -translate-x-1/2"
         >
           <motion.button
             onClick={scrollToNext}
